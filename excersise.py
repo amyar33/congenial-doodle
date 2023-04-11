@@ -58,3 +58,14 @@ class train(land_vehicle):
         print('You have arrived at the train station')
     def leave(self):
         print('You have left the train station')
+#Defined the car class that inherits from the land vehicle class
+class car(land_vehicle):
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, wheel, model, year):
+        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors)
+        self.wheel = wheel # in integer
+        self.model = model # in string
+        self.year = year # in Gregorian year
+        
+
+
