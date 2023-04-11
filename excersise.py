@@ -23,25 +23,52 @@ class vehicle:
 #Defined the land vehicle class that inherits from vehicle class
 class land_vehicle(vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors):
+    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors,fuel_level):
         super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine)
         self.num_of_doors = num_of_doors # in integer
+        self.running = False
+        self.door_locked = True
+        self.honk = False
+        self.fuel_level = fuel_level
     #Defined the methods
     def honk_the_horn(self):
-        print('You are honking the horn')
+        if not self.honk:
+            self.honk = True
+            print('You are honking the horn')
+            self.honk = False
     def start(self):
-        print('You started the vehicle')
+        if not self.running:
+            self.running = True
+            print('You started the vehicle')
+        else:
+            print('The vehicle is already running')
     def stop(self):
-        print('You stopped the vehicle')
-    def open_door(self):
-        print('You opened the door')
-    def close_door(self):
-        print('You closed the door')
+        if self.running:
+            self.running = False
+            print('You stopped the vehicle')
+        else:
+            print('The vehicle is already stopped')
+    def open_doors(self):
+        if self.door_locked:
+            self.door_locked = False
+            print('You opened the doors')
+        else:
+            print('The doors are already open')
+    def close_doors(self):
+        if not self.door_locked:
+            self.door_locked = True
+            print('You closed the door')
+        else:
+            print('The doors are already locked')
+    def refuel(self):
+        if self.fuel_level < 100:
+            self.fuel_level = 100
+            print('The vehicle is refueled')
 #Defined the train class that inherits from the land vehicle class
 class train(land_vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, wagon, railway, train_station):
-        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors)
+    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level, wagon, railway, train_station):
+        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors,fuel_level)
         self.wagon = wagon # in integer
         self.railway = railway # in string
         self.train_station = train_station # in string
@@ -52,20 +79,18 @@ class train(land_vehicle):
     def detach_wagon(self):
         self.wagon -= 1
         print('You have detached a wagon')
-    def change_railway(self):
-        print('You have changed your railway')
-    def arrive(self):
-        print('You have arrived at the train station')
-    def leave(self):
-        print('You have left the train station')
+    def change_railway(self,rail_name):
+        print('You have changed your railway to ', rail_name)
+    def arrive(self,station_name):
+        print('You have arrived at ',station_name,' train station')
+    def leave(self,station_name):
+        print('You have left ',station_name,' train station')
 #Defined the car class that inherits from the land vehicle class
 class car(land_vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, wheel, model, year):
-        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors)
+    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level, wheel, model, year, color):
+        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level)
         self.wheel = wheel # in integer
         self.model = model # in string
         self.year = year # in Gregorian year
-        
-
-
+        self.color = color # in string
