@@ -94,3 +94,27 @@ class car(land_vehicle):
         self.model = model # in string
         self.year = year # in Gregorian year
         self.color = color # in string
+        self.hand_brake = True
+        self.gear = 1 # in integer
+    def pull_hand_brake(self):
+        if self.hand_brake:
+            print('The hand brake is already pulled')
+        else:
+            self.hand_brake = True
+            print('The hand brake is pulled')
+    def realese_hand_brake(self):
+        if self.hand_brake:
+            self.hand_brake = False
+            print('The hand brake is realesed')
+        else:
+            print('The hand brake is already realesed')
+    def gear_up(self):
+        self.gear += 1
+        print('You have geared up to ',self.gear,' gear')
+    def gear_down(self):
+        if self.gear == 1:
+            print('You are at the 1st gear and can not gear down')
+        else:
+            self.gear -= 1
+            print('You have geared down to ',self.gear,' gear')
+
