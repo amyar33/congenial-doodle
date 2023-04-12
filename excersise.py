@@ -1,14 +1,42 @@
+#Made the engine class
+class Engine:
+    #Defined the attributes
+    def __init__(self,capacity:float,fuel_type:str,cylinders:int,engine_type:str,material:str):
+        self.capacity = capacity # in liters
+        self.fuel_type = fuel_type # in string
+        self.cylinders = cylinders # in integer
+        self.engine_type = engine_type # in string
+        self.material = material # in string
+        self.running = False
+    #Defined the methods
+    def oil_change(self,oil_type):
+        print("You have changed your engine's oil to ",oil_type)
+    def cylinder_move(self):
+        print('The cylinders are moving')
+    def charge(self,watt):
+        print('The engine is charging the battery with ',watt,' per hour')
+    def start(self):
+        if not self.running:
+            self.running = True
+            print('You started the engine')
+        else:
+            print('The engine is already running')
+    def stop(self):
+        if self.running:
+            self.running = False
+            print('You stopped the engine')
+        else:
+            print('The engine is already stopped')
 #Made the vehicle class
 class vehicle:
     #Defined the attributes
-    def __init__(self,max_speed,weight,horsepower,fuel_type,cargo_capacity,passenger_capacity,engine):
+    def __init__(self,max_speed,weight,horsepower,cargo_capacity,passenger_capacity,capacity,fuel_type,cylinders,engine_type,material):
         self.max_speed = max_speed # in kilometers per hour
         self.weight = weight # in tons
         self.horsepower = horsepower # in hp
-        self.fuel_type = fuel_type # in string
         self.cargo_capacity = cargo_capacity # in tons
         self.passenger_capacity = passenger_capacity # in integer
-        self.engine = engine # in string
+        self.engine = Engine(capacity, fuel_type, cylinders, engine_type, material)
     #Defined the methods
     def acceleration(self):
         print('The vehicle is accelerating')
@@ -20,13 +48,17 @@ class vehicle:
         print('The vehicle is moving with constant speed')
     def burn_fuel(self):
         print('The vehicle is burning fuel')
+    def drive(self):
+        self.engine.start()
+        self.acceleration()
+        self.move_with_constant_speed()
+        print('You are driving the vehicle')
 #Defined the land vehicle class that inherits from vehicle class
 class land_vehicle(vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors,fuel_level):
-        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity,capacity,fuel_type,cylinders,engine_type,material, num_of_doors,fuel_level):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity,capacity,fuel_type,cylinders,engine_type,material)
         self.num_of_doors = num_of_doors # in integer
-        self.running = False
         self.door_locked = True
         self.honk = False
         self.fuel_level = fuel_level
@@ -36,18 +68,6 @@ class land_vehicle(vehicle):
             self.honk = True
             print('You are honking the horn')
             self.honk = False
-    def start(self):
-        if not self.running:
-            self.running = True
-            print('You started the vehicle')
-        else:
-            print('The vehicle is already running')
-    def stop(self):
-        if self.running:
-            self.running = False
-            print('You stopped the vehicle')
-        else:
-            print('The vehicle is already stopped')
     def open_doors(self):
         if self.door_locked:
             self.door_locked = False
@@ -67,8 +87,8 @@ class land_vehicle(vehicle):
 #Defined the train class that inherits from the land vehicle class
 class train(land_vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level, wagon, railway, train_station):
-        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors,fuel_level)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material ,wagon, railway, train_station):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors,fuel_level,capacity,fuel_type,cylinders,engine_type,material)
         self.wagon = wagon # in integer
         self.railway = railway # in string
         self.train_station = train_station # in string
@@ -88,8 +108,8 @@ class train(land_vehicle):
 #Defined the car class that inherits from the land vehicle class
 class car(land_vehicle):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level, wheel, model, year, color):
-        super().__init__(max_speed, weight, horsepower, fuel_type, cargo_capacity, passenger_capacity, engine, num_of_doors, fuel_level)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material ,wheel, model, year, color):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material)
         self.wheel = wheel # in integer
         self.model = model # in string
         self.year = year # in Gregorian year
