@@ -48,7 +48,7 @@ class vehicle:
         print('The vehicle is moving with constant speed')
     def burn_fuel(self):
         print('The vehicle is burning fuel')
-    def drive(self):
+    def drive(self, distance, time):
         self.engine.start()
         self.acceleration()
         self.move_with_constant_speed()
@@ -168,3 +168,21 @@ class sedan(car):
         print('You are headed to',place)
         light_weight_car.drive(self)
         print('You have arrived at',place,', have fun :)')
+#Defined the SUV class that inherits from the car class
+class SUV(car):
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color, differential_type, diff_lock):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color)
+    self.differential_type = differential_type # in string
+    self.diff_lock = diff_lock # in string,it's a yes - no question
+    def dor_dor(self,place):
+        print('You are headed to',place)
+        light_weight_car.drive(self)
+        print('You have arrived at',place,', have fun :)')
+    def offroad(self,differential_type,diff_lock):
+        if differential_type == '4WD' or differential_type == 'AWD' and diff_lock == 'yes':
+            print('You have an offroad capable SUV')
+        if differential_type == '4WD' or differential_type == 'AWD' and diff_lock == 'no':
+            print('Be careful while offroading')
+        if differential_type == '2WD':
+            print('Change your car if you want to go offroading')    
