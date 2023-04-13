@@ -116,6 +116,7 @@ class car(land_vehicle):
         self.color = color # in string
         self.hand_brake = True
         self.gear = 1 # in integer
+    #Defined the methods
     def pull_hand_brake(self):
         if self.hand_brake:
             print('The hand brake is already pulled')
@@ -137,4 +138,33 @@ class car(land_vehicle):
         else:
             self.gear -= 1
             print('You have geared down to ',self.gear,' gear')
-
+#Defined the truck class that inherits from the car class
+class truck(car):
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color, cargo_type):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel , model, year, color)
+        self.cargo_type = cargo_type # in string
+        self.cargo = False
+    def load_cargo(self,cargo_weight,cargo_type):
+        if self.cargo:
+            print('The truck is already loaded')
+        else:
+            self.cargo = True
+            print('You have loaded ', cargo_weight,' tons of ',cargo_type)
+            truck.drive(self)
+            print('You have arrived to your destination')
+            truck.unload_cargo(self, cargo_weight, cargo_type)
+    def unload_cargo(self,cargo_weight,cargo_type):
+        if self.cargo:
+            self.cargo = False
+            print('You have unloaded',cargo_weight,'tons of',cargo_type)
+        else:
+            print('You have already unloaded the cargo')
+#Defined the light weight class that inherits from the car class
+class sedan(car):
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color)
+    def dor_dor(self,place):
+        print('You are headed to',place)
+        light_weight_car.drive(self)
+        print('You have arrived at',place,', have fun :)')
