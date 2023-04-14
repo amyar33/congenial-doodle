@@ -145,13 +145,13 @@ class truck(car):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel , model, year, color)
         self.cargo_type = cargo_type # in string
         self.cargo = False
-    def load_cargo(self,cargo_weight,cargo_type):
+    def load_cargo(self,cargo_weight,cargo_type,distance,time):
         if self.cargo:
             print('The truck is already loaded')
         else:
             self.cargo = True
             print('You have loaded ', cargo_weight,' tons of ',cargo_type)
-            truck.drive(self)
+            truck.drive(self,distance,time)
             print('You have arrived to your destination')
             truck.unload_cargo(self, cargo_weight, cargo_type)
     def unload_cargo(self,cargo_weight,cargo_type):
@@ -160,6 +160,8 @@ class truck(car):
             print('You have unloaded',cargo_weight,'tons of',cargo_type)
         else:
             print('You have already unloaded the cargo')
+# tarasht = truck(120, 3, 200, 3, 2, 2, 85, 3, 'gas oil', 6, 'v6', 'metal', 4, 'tacoma', 2015, 'red', 'food')
+# tarasht.load_cargo(3, 'food',200,3)
 #Defined the light weight class that inherits from the car class
 class sedan(car):
     def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color):
@@ -173,51 +175,49 @@ class SUV(car):
     #Defined the attributes that were not defined in the super class
     def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color, differential_type, diff_lock):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color)
-    self.differential_type = differential_type # in string
-    self.diff_lock = diff_lock # in string,it's a yes - no question
+        self.differential_type = differential_type # in string
+        self.diff_lock = diff_lock # in string,it's a yes - no question
     def dor_dor(self,place):
         print('You are headed to',place)
         light_weight_car.drive(self)
         print('You have arrived at',place,', have fun :)')
     def offroad(self,differential_type,diff_lock):
-        if differential_type == '4WD' or differential_type == 'AWD' and diff_lock == 'yes':
+        if self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'yes':
             print('You have an offroad capable SUV')
-        if differential_type == '4WD' or differential_type == 'AWD' and diff_lock == 'no':
+        if self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'no':
             print('Be careful while offroading')
-        if differential_type == '2WD':
+        if self.differential_type == '2WD':
             print('Change your car if you want to go offroading') 
 #Defined the airplane class that inherits from the vehicle class
 class airplane(vehicle):
     #Defined the attributes that were not defined in the super class
     def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material)
-    self.wing_span = wing_span # in meters
-    self.model = model # in string
-    self.num_of_engines = num_of_engines # in integer
-    self.flight_permission = False
+        self.wing_span = wing_span # in meters
+        self.model = model # in string
+        self.num_of_engines = num_of_engines # in integer
+        self.flight_permission = False
     #Defined the methods
     def take_off(self,weather_condition,runway_clearence,airport):
         if weather_condition == 'clear' and runway_clearence == 'clear':
             print('You have permission to take off from',airport,'airport')
             self.flight_permission = True
-            print('You are taking off')
+            print('You are taking off from',airport,'airport')
         else:
             print("You don't have the permission to take off")
     def landing(self,weather_condition_2,runway_clearence_2,airport_2):
         if weather_condition_2 == 'clear' and runway_clearence_2 == 'clear':
             print('You have permission to land at',airport_2,'airport')
             self.flight_permission = True
-            print('You are landing')
+            print('You are landing at',airport_2,'airport')
         else:
             print("You don't have the permission to land")
 #Defined the fighter airplane class that inherits from the airplane class
 class fighter_airplane(airplane):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_missiles, stealth):
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_missiles):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
-    self.num_of_missiles = num_of_missiles # in integer
-    self.current_speed = current_speed # in mach
-    self.stealth = stealth # a yes-no question to see if the plane could be detected by radars or not
+        self.num_of_missiles = num_of_missiles # in integer
     #Defined the methods    
     def shoot_missile(self,missile_type):
         if self.num_of_missiles > 0:
@@ -228,33 +228,38 @@ class fighter_airplane(airplane):
     def maneuver(self,maneuver_name):
         print('You did a',maneuver_name,'maneuver because a missile was shot at you')
     def breaking_sound_barrier(self,current_speed):
-        if current_speed > max_speed:
+        if current_speed > self.max_speed:
             print("You can't go faster than your maximum speed")
-        elif current_speed < max_speed and current_speed > 1:
+        elif current_speed < self.max_speed and current_speed > 1:
             print('You have broken the sound barrier')
 #Defined the passenger airplane class that inherits from the airplane class
 class passenger_airplane(airplane):
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_tickets, ticket_price, flight_duration):
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, ticket_price, flight_duration):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
-    self.num_of_tickets = num_of_tickets # in integer
-    self.ticket_price = ticket_price # in dollars
-    self.flight_duration = flight_duration # in hours
-    self.total_cost = 0
-    self.hourly_cost = 3000 # in dollars
+        self.ticket_price = ticket_price # in dollars
+        self.flight_duration = flight_duration # in hours
+        self.total_cost = 0
+        self.hourly_cost = 3000 # in dollars
     #Defined the methods 
     def overboard_check(self,num_of_tickets):
-        if num_of_tickets > passenger_capacity:
-            num_of_penalty = num_of_tickets - passenger_capacity
+        if num_of_tickets > self.passenger_capacity:
+            num_of_penalty = num_of_tickets - self.passenger_capacity
             print('You have overboarded the airplane and have to pay fine to',num_of_penalty,'people')
-            self.total_penalty = self.num_of_penalty * self.ticket_price * 1.2
+            total_penalty = num_of_penalty * self.ticket_price * 1.2
             print('Your total penalty is:',total_penalty)
-    def check_proftibility(self):
-        self.total_sell = self.passenger_capacity * self.ticket_price
-        self.total_cost = (self.hourly_cost * self.flight_duration) + self.total_penalty
-        if total_sell > self.total_cost:
-            self.profit = slef.total_sell - self.total_cost
-            print('The flight is profitable and has a profit of',self.profit,'dollars')
+    def check_proftibility(self,num_of_tickets):
+        if num_of_tickets > self.passenger_capacity:
+            num_of_penalty = num_of_tickets - self.passenger_capacity
+            total_penalty = num_of_penalty * self.ticket_price * 1.2 
+            total_sell = self.passenger_capacity * self.ticket_price
+            self.total_cost = (self.hourly_cost * self.flight_duration) + total_penalty
         else:
-            slef.loss = self.total_cost - self.total_sell
-            print('The flight is not profitable and has a loss of',self.loss,'dollars')
+            total_sell = num_of_tickets * self.ticket_price
+            self.total_cost = self.hourly_cost * self.flight_duration
+        if total_sell > self.total_cost:
+            profit = total_sell - self.total_cost
+            print('The flight is profitable and has a profit of',profit,'dollars')
+        else:
+            loss = self.total_cost - total_sell
+            print('The flight is not profitable and has a loss of',loss,'dollars')
