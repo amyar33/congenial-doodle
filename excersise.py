@@ -232,3 +232,29 @@ class fighter_airplane(airplane):
             print("You can't go faster than your maximum speed")
         elif current_speed < max_speed and current_speed > 1:
             print('You have broken the sound barrier')
+#Defined the passenger airplane class that inherits from the airplane class
+class passenger_airplane(airplane):
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_tickets, ticket_price, flight_duration):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
+    self.num_of_tickets = num_of_tickets # in integer
+    self.ticket_price = ticket_price # in dollars
+    self.flight_duration = flight_duration # in hours
+    self.total_cost = 0
+    self.hourly_cost = 3000 # in dollars
+    #Defined the methods 
+    def overboard_check(self,num_of_tickets):
+        if num_of_tickets > passenger_capacity:
+            num_of_penalty = num_of_tickets - passenger_capacity
+            print('You have overboarded the airplane and have to pay fine to',num_of_penalty,'people')
+            self.total_penalty = self.num_of_penalty * self.ticket_price * 1.2
+            print('Your total penalty is:',total_penalty)
+    def check_proftibility(self):
+        self.total_sell = self.passenger_capacity * self.ticket_price
+        self.total_cost = (self.hourly_cost * self.flight_duration) + self.total_penalty
+        if total_sell > self.total_cost:
+            self.profit = slef.total_sell - self.total_cost
+            print('The flight is profitable and has a profit of',self.profit,'dollars')
+        else:
+            slef.loss = self.total_cost - self.total_sell
+            print('The flight is not profitable and has a loss of',self.loss,'dollars')
