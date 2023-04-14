@@ -185,4 +185,32 @@ class SUV(car):
         if differential_type == '4WD' or differential_type == 'AWD' and diff_lock == 'no':
             print('Be careful while offroading')
         if differential_type == '2WD':
-            print('Change your car if you want to go offroading')    
+            print('Change your car if you want to go offroading') 
+#Defined the airplane class that inherits from the vehicle class
+class airplane(vehicle):
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material)
+    self.wing_span = wing_span # in meters
+    self.model = model # in string
+    self.num_of_engines = num_of_engines # in integer
+    self.flight_permission = False
+    #Defined the methods
+    def take_off(self,weather_condition,runway_clearence,airport):
+        if weather_condition == 'clear' and runway_clearence == 'clear':
+            print('You have permission to take off from',airport,'airport')
+            self.flight_permission = True
+            print('You are taking off')
+        else:
+            print("You don't have the permission to take off")
+    def landing(self,weather_condition_2,runway_clearence_2,airport_2):
+        if weather_condition_2 == 'clear' and runway_clearence_2 == 'clear':
+            print('You have permission to land at',airport_2,'airport')
+            self.flight_permission = True
+            print('You are landing')
+        else:
+            print("You don't have the permission to land")
+#Defined the fighter airplane class that inherits from the airplane class
+#class fighter_airplane(airplane):
+    #Defined the attributes that were not defined in the super class
+    #def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, )
