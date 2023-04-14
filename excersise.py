@@ -1,13 +1,15 @@
 #Made the engine class
 class Engine:
+
     #Defined the attributes
-    def __init__(self,capacity:float,fuel_type:str,cylinders:int,engine_type:str,material:str):
-        self.capacity = capacity # in liters
+    def __init__(self,engine_capacity:float,fuel_type:str,cylinders:int,engine_type:str,engine_material:str):
+        self.engine_capacity = engine_capacity # in liters
         self.fuel_type = fuel_type # in string
         self.cylinders = cylinders # in integer
         self.engine_type = engine_type # in string
-        self.material = material # in string
+        self.engine_material = engine_material # in string
         self.running = False
+
     #Defined the methods
     def oil_change(self,oil_type):
         print("You have changed your engine's oil to ",oil_type)
@@ -27,16 +29,18 @@ class Engine:
             print('You stopped the engine')
         else:
             print('The engine is already stopped')
+
 #Made the vehicle class
 class vehicle:
     #Defined the attributes
-    def __init__(self,max_speed,weight,horsepower,cargo_capacity,passenger_capacity,capacity,fuel_type,cylinders,engine_type,material):
+    def __init__(self,max_speed,weight,horsepower,cargo_capacity,passenger_capacity,engine_capacity,fuel_type,cylinders,engine_type,engine_material):
         self.max_speed = max_speed # in kilometers per hour
         self.weight = weight # in tons
         self.horsepower = horsepower # in hp
         self.cargo_capacity = cargo_capacity # in tons
         self.passenger_capacity = passenger_capacity # in integer
-        self.engine = Engine(capacity, fuel_type, cylinders, engine_type, material)
+        self.engine = Engine(engine_capacity, fuel_type, cylinders, engine_type, engine_material)
+
     #Defined the methods
     def acceleration(self):
         print('The vehicle is accelerating')
@@ -52,16 +56,20 @@ class vehicle:
         self.engine.start()
         self.acceleration()
         self.move_with_constant_speed()
-        print('You are driving the vehicle')
+        speed = distance / time
+        print('You are driving the vehicle with constant speed of',speed,'km/h')
+
 #Defined the land vehicle class that inherits from vehicle class
 class land_vehicle(vehicle):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity,capacity,fuel_type,cylinders,engine_type,material, num_of_doors,fuel_level):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity,capacity,fuel_type,cylinders,engine_type,material)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity,engine_capacity,fuel_type,cylinders,engine_type,engine_material, num_of_doors,fuel_level):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity,engine_capacity,fuel_type,cylinders,engine_type,engine_material)
         self.num_of_doors = num_of_doors # in integer
         self.door_locked = True
         self.honk = False
         self.fuel_level = fuel_level
+
     #Defined the methods
     def honk_the_horn(self):
         if not self.honk:
@@ -84,38 +92,43 @@ class land_vehicle(vehicle):
         if self.fuel_level < 100:
             self.fuel_level = 100
             print('The vehicle is refueled')
+
 #Defined the train class that inherits from the land vehicle class
 class train(land_vehicle):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material ,wagon, railway, train_station):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors,fuel_level,capacity,fuel_type,cylinders,engine_type,material)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,engine_capacity,fuel_type,cylinders,engine_type,engine_material ,wagon, railway):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors,fuel_level,engine_capacity,fuel_type,cylinders,engine_type,engine_material)
         self.wagon = wagon # in integer
         self.railway = railway # in string
-        self.train_station = train_station # in string
+
     #Defined the methods
     def attach_wagon(self):
         self.wagon += 1
-        print('You have attached a wagon')
+        print('You have attached a wagon and currently have',self.wagon,'wagons attached')
     def detach_wagon(self):
         self.wagon -= 1
-        print('You have detached a wagon')
+        print('You have detached a wagon and currently have',self.wagon,'wagons attached')
     def change_railway(self,rail_name):
-        print('You have changed your railway to ', rail_name)
+        print('You have changed your railway to ',rail_name)
     def arrive(self,station_name):
         print('You have arrived at ',station_name,' train station')
     def leave(self,station_name):
         print('You have left ',station_name,' train station')
+
 #Defined the car class that inherits from the land vehicle class
 class car(land_vehicle):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material ,wheel, model, year, color):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,capacity,fuel_type,cylinders,engine_type,material)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,engine_capacity,fuel_type,cylinders,engine_type,engine_material ,wheel, model, year, color):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level,engine_capacity,fuel_type,cylinders,engine_type,engine_material)
         self.wheel = wheel # in integer
         self.model = model # in string
         self.year = year # in Gregorian year
         self.color = color # in string
         self.hand_brake = True
         self.gear = 1 # in integer
+
     #Defined the methods
     def pull_hand_brake(self):
         if self.hand_brake:
@@ -138,13 +151,17 @@ class car(land_vehicle):
         else:
             self.gear -= 1
             print('You have geared down to ',self.gear,' gear')
+
 #Defined the truck class that inherits from the car class
 class truck(car):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color, cargo_type):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel , model, year, color)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel, model, year, color, cargo_type):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel , model, year, color)
         self.cargo_type = cargo_type # in string
         self.cargo = False
+
+    #Defined the methods
     def load_cargo(self,cargo_weight,cargo_type,distance,time):
         if self.cargo:
             print('The truck is already loaded')
@@ -160,43 +177,52 @@ class truck(car):
             print('You have unloaded',cargo_weight,'tons of',cargo_type)
         else:
             print('You have already unloaded the cargo')
-# tarasht = truck(120, 3, 200, 3, 2, 2, 85, 3, 'gas oil', 6, 'v6', 'metal', 4, 'tacoma', 2015, 'red', 'food')
-# tarasht.load_cargo(3, 'food',200,3)
+
 #Defined the light weight class that inherits from the car class
 class sedan(car):
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color)
+
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel, model, year, color):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel, model, year, color)
+    
+    #Defined the methods
     def dor_dor(self,place):
         print('You are headed to',place)
-        light_weight_car.drive(self)
+        vehicle.drive(self)
         print('You have arrived at',place,', have fun :)')
+
 #Defined the SUV class that inherits from the car class
 class SUV(car):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color, differential_type, diff_lock):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, capacity, fuel_type, cylinders, engine_type, material, wheel, model, year, color)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel, model, year, color, differential_type, diff_lock):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, num_of_doors, fuel_level, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wheel, model, year, color)
         self.differential_type = differential_type # in string
         self.diff_lock = diff_lock # in string,it's a yes - no question
-    def dor_dor(self,place):
+    
+    #Defined the methods
+    def dor_dor(self,place,distance,time):
         print('You are headed to',place)
-        light_weight_car.drive(self)
+        vehicle.drive(self,distance,time)
         print('You have arrived at',place,', have fun :)')
-    def offroad(self,differential_type,diff_lock):
+    def offroad(self):
         if self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'yes':
             print('You have an offroad capable SUV')
-        if self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'no':
+        elif self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'no':
             print('Be careful while offroading')
-        if self.differential_type == '2WD':
+        elif self.differential_type == '2WD':
             print('Change your car if you want to go offroading') 
+
 #Defined the airplane class that inherits from the vehicle class
 class airplane(vehicle):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material)
         self.wing_span = wing_span # in meters
         self.model = model # in string
         self.num_of_engines = num_of_engines # in integer
         self.flight_permission = False
+
     #Defined the methods
     def take_off(self,weather_condition,runway_clearence,airport):
         if weather_condition == 'clear' and runway_clearence == 'clear':
@@ -212,12 +238,15 @@ class airplane(vehicle):
             print('You are landing at',airport_2,'airport')
         else:
             print("You don't have the permission to land")
+
 #Defined the fighter airplane class that inherits from the airplane class
 class fighter_airplane(airplane):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_missiles):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines, num_of_missiles):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines)
         self.num_of_missiles = num_of_missiles # in integer
+
     #Defined the methods    
     def shoot_missile(self,missile_type):
         if self.num_of_missiles > 0:
@@ -232,15 +261,18 @@ class fighter_airplane(airplane):
             print("You can't go faster than your maximum speed")
         elif current_speed < self.max_speed and current_speed > 1:
             print('You have broken the sound barrier')
+
 #Defined the passenger airplane class that inherits from the airplane class
 class passenger_airplane(airplane):
+
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, ticket_price, flight_duration):
-        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines, ticket_price, flight_duration):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines)
         self.ticket_price = ticket_price # in dollars
         self.flight_duration = flight_duration # in hours
         self.total_cost = 0
         self.hourly_cost = 3000 # in dollars
+
     #Defined the methods 
     def overboard_check(self,num_of_tickets):
         if num_of_tickets > self.passenger_capacity:
