@@ -211,6 +211,24 @@ class airplane(vehicle):
         else:
             print("You don't have the permission to land")
 #Defined the fighter airplane class that inherits from the airplane class
-#class fighter_airplane(airplane):
+class fighter_airplane(airplane):
     #Defined the attributes that were not defined in the super class
-    #def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, )
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines, num_of_missiles, stealth):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, capacity, fuel_type, cylinders, engine_type, material, wing_span, model, num_of_engines)
+    self.num_of_missiles = num_of_missiles # in integer
+    self.current_speed = current_speed # in mach
+    self.stealth = stealth # a yes-no question to see if the plane could be detected by radars or not
+    #Defined the methods    
+    def shoot_missile(self,missile_type):
+        if self.num_of_missiles > 0:
+            self.num_of_missiles -= 1
+            print('You have shot a',missile_type,'missile')
+        else:
+            print("You don't have any missiles to shoot")
+    def maneuver(self,maneuver_name):
+        print('You did a',maneuver_name,'maneuver because a missile was shot at you')
+    def breaking_sound_barrier(self,current_speed):
+        if current_speed > max_speed:
+            print("You can't go faster than your maximum speed")
+        elif current_speed < max_speed and current_speed > 1:
+            print('You have broken the sound barrier')
