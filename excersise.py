@@ -13,16 +13,20 @@ class Engine:
     #Defined the methods
     def oil_change(self,oil_type):
         print("You have changed your engine's oil to ",oil_type)
+
     def cylinder_move(self):
         print('The cylinders are moving')
+
     def charge(self,watt):
         print('The engine is charging the battery with ',watt,' per hour')
+
     def start(self):
         if not self.running:
             self.running = True
             print('You started the engine')
         else:
             print('The engine is already running')
+
     def stop(self):
         if self.running:
             self.running = False
@@ -44,14 +48,19 @@ class vehicle:
     #Defined the methods
     def acceleration(self):
         print('The vehicle is accelerating')
+
     def deceleration(self):
         print('The vehicle is decelerating')
+
     def turn(self):
         print('The vehicle is turning')
+
     def move_with_constant_speed(self):
         print('The vehicle is moving with constant speed')
+
     def burn_fuel(self):
         print('The vehicle is burning fuel')
+
     def drive(self, distance, time):
         self.engine.start()
         self.acceleration()
@@ -76,18 +85,21 @@ class land_vehicle(vehicle):
             self.honk = True
             print('You are honking the horn')
             self.honk = False
+
     def open_doors(self):
         if self.door_locked:
             self.door_locked = False
             print('You opened the doors')
         else:
             print('The doors are already open')
+            
     def close_doors(self):
         if not self.door_locked:
             self.door_locked = True
             print('You closed the door')
         else:
             print('The doors are already locked')
+
     def refuel(self):
         if self.fuel_level < 100:
             self.fuel_level = 100
@@ -106,13 +118,17 @@ class train(land_vehicle):
     def attach_wagon(self):
         self.wagon += 1
         print('You have attached a wagon and currently have',self.wagon,'wagons attached')
+
     def detach_wagon(self):
         self.wagon -= 1
         print('You have detached a wagon and currently have',self.wagon,'wagons attached')
+
     def change_railway(self,rail_name):
         print('You have changed your railway to ',rail_name)
+
     def arrive(self,station_name):
         print('You have arrived at ',station_name,' train station')
+
     def leave(self,station_name):
         print('You have left ',station_name,' train station')
 
@@ -136,15 +152,18 @@ class car(land_vehicle):
         else:
             self.hand_brake = True
             print('The hand brake is pulled')
+
     def realese_hand_brake(self):
         if self.hand_brake:
             self.hand_brake = False
             print('The hand brake is realesed')
         else:
             print('The hand brake is already realesed')
+
     def gear_up(self):
         self.gear += 1
         print('You have geared up to ',self.gear,' gear')
+
     def gear_down(self):
         if self.gear == 1:
             print('You are at the 1st gear and can not gear down')
@@ -171,6 +190,7 @@ class truck(car):
             truck.drive(self,distance,time)
             print('You have arrived to your destination')
             truck.unload_cargo(self, cargo_weight, cargo_type)
+
     def unload_cargo(self,cargo_weight,cargo_type):
         if self.cargo:
             self.cargo = False
@@ -204,6 +224,7 @@ class SUV(car):
         print('You are headed to',place)
         vehicle.drive(self,distance,time)
         print('You have arrived at',place,', have fun :)')
+
     def offroad(self):
         if self.differential_type == '4WD' or self.differential_type == 'AWD' and self.diff_lock == 'yes':
             print('You have an offroad capable SUV')
@@ -231,6 +252,7 @@ class airplane(vehicle):
             print('You are taking off from',airport,'airport')
         else:
             print("You don't have the permission to take off")
+
     def landing(self,weather_condition_2,runway_clearence_2,airport_2):
         if weather_condition_2 == 'clear' and runway_clearence_2 == 'clear':
             print('You have permission to land at',airport_2,'airport')
@@ -254,8 +276,10 @@ class fighter_airplane(airplane):
             print('You have shot a',missile_type,'missile')
         else:
             print("You don't have any missiles to shoot")
+
     def maneuver(self,maneuver_name):
         print('You did a',maneuver_name,'maneuver because a missile was shot at you')
+
     def breaking_sound_barrier(self,current_speed):
         if current_speed > self.max_speed:
             print("You can't go faster than your maximum speed")
@@ -280,6 +304,7 @@ class passenger_airplane(airplane):
             print('You have overboarded the airplane and have to pay fine to',num_of_penalty,'people')
             total_penalty = num_of_penalty * self.ticket_price * 1.2
             print('Your total penalty is:',total_penalty)
+
     def check_proftibility(self,num_of_tickets):
         if num_of_tickets > self.passenger_capacity:
             num_of_penalty = num_of_tickets - self.passenger_capacity
@@ -295,3 +320,152 @@ class passenger_airplane(airplane):
         else:
             loss = self.total_cost - total_sell
             print('The flight is not profitable and has a loss of',loss,'dollars')
+
+#Defined the marine vehicle class that inherits from the vehicle class
+class marine_vehicle(vehicle):
+
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material)
+        self.crew = [] # initial crew is empty
+        self.crew_capacity = crew_capacity # in integer
+
+    #Defined the methods
+    def hire_crew(self, name, role):
+            # add a tuple of name and role to the crew list, if there is space available
+            if len(self.crew) < self.crew_capacity:
+                self.crew.append((name, role))
+                return True # hiring successful
+            else:
+                return False # hiring failed
+
+    def fire_crew(self, name):
+            # remove a tuple of name and role from the crew list, if it exists
+            for i in range(len(self.crew)):
+                if self.crew[i][0] == name:
+                    self.crew.pop(i)
+                    return True # firing successful
+            return False # firing failed
+
+#Defined the cruise ship class that inherits from the marine vehicle class
+class cruise_ship(marine_vehicle):
+
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity, passenger_capacity):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity)
+        # initialize an empty dictionary to store the passengers
+        self.passengers = {}
+        self.passenger_capacity = passenger_capacity # in integer
+
+    #Defined the methods
+    def book_passenger(self, name, cabin):
+        # check if the cabin is available and the passenger is not already booked
+        if cabin not in self.passengers and name not in self.passengers.values():
+            # add the passenger name and cabin number to the dictionary
+            self.passengers[cabin] = (name, False) # False means not checked in
+            return True # booking successful
+        else:
+            return False # booking failed
+
+    def cancel_passenger(self, name):
+        # check if the passenger is booked
+        if name in self.passengers.values():
+            # find the cabin number of the passenger
+            for cabin in self.passengers:
+                if self.passengers[cabin][0] == name:
+                    # remove the passenger name and cabin number from the dictionary
+                    self.passengers.pop(cabin)
+                    return True # cancellation successful
+        return False # cancellation failed
+
+    def check_in_passenger(self, name):
+        # check if the passenger is booked and not checked in
+        if name in self.passengers.values():
+            for cabin in self.passengers:
+                if self.passengers[cabin][0] == name and not self.passengers[cabin][1]:
+                    # update the checked_in attribute to True
+                    self.passengers[cabin] = (name, True)
+                    return True # check-in successful
+        return False # check-in failed
+
+    def check_out_passenger(self, name):
+        # check if the passenger is booked and checked in
+        if name in self.passengers.values():
+            for cabin in self.passengers:
+                if self.passengers[cabin][0] == name and self.passengers[cabin][1]:
+                    # update the checked_in attribute to False
+                    self.passengers[cabin] = (name, False)
+                    return True # check-out successful
+        return False # check-out failed
+
+#Defined the submarine class that inherits from the marine vehicle class
+class submarine(marine_vehicle):
+
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity, max_depth, max_torpedoes):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity)
+        self.max_depth = max_depth # in meters
+        self.depth = 0 # initial depth is zero
+        self.max_torpedoes = max_torpedoes # in integers
+    
+    #Defined the methods
+    def dive(self, depth):
+        # check if the depth is within the range of 0 to max_depth
+        if 0 <= depth <= self.max_depth:
+            self.depth = depth
+            return True 
+        else:
+            return False
+    
+    def surface(self):
+        # set the depth attribute to zero
+        self.depth = 0
+
+    def fire_torpedo(self, target):
+        # check if the submarine has any torpedoes left
+        if self.torpedoes > 0:
+            # simulate firing a torpedo at a target
+            print("You fired a torpedo at",target)
+            # decrease the number of torpedoes by one
+            self.torpedoes -= 1
+            return True # firing successful
+        else:
+            return False # firing failed
+    
+    def reload_torpedo(self):
+        # check if the number of torpedoes is below the max_torpedoes
+        if self.torpedoes < self.max_torpedoes:
+            # increase the number of torpedoes by one
+            self.torpedoes += 1
+            return True # reloading successful
+        else:
+            return False # reloading failed
+
+#Defined the aircraft carrier class that inherits from the marine vehicle class
+class aircraft_carrier(marine_vehicle):
+
+    #Defined the attributes that were not defined in the super class
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacit, aircraft_capacity):
+        super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity)
+        # initialize an empty list to store the aircrafts
+        self.aircrafts = []
+        self.aircraft_capacity = aircraft_capacity
+    
+    #Defined the methods
+    def launch_aircraft(self, name):
+        # check if the aircraft is on board and ready to launch
+        if name in self.aircrafts:
+            # remove the aircraft name from the list
+            self.aircrafts.remove(name)
+            return True # launching successful
+        else:
+            return False # launching failed
+    
+    def land_aircraft(self, name):
+        # check if the aircraft is not on board and there is space available
+        if name not in self.aircrafts and len(self.aircrafts) < self.aircraft_capacity:
+            # add the aircraft name to the list
+            self.aircrafts.append(name)
+            return True # landing successful
+        else:
+            return False # landing failed
