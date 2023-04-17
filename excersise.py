@@ -268,12 +268,13 @@ class fighter_airplane(airplane):
     def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines, num_of_missiles):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines)
         self.num_of_missiles = num_of_missiles # in integer
+        self.hourly_cost = 15000 # in dollars
 
     #Defined the methods    
-    def shoot_missile(self,missile_type):
+    def shoot_missile(self):
         if self.num_of_missiles > 0:
             self.num_of_missiles -= 1
-            print('You have shot a',missile_type,'missile')
+            print('You have shot a missile')
         else:
             print("You don't have any missiles to shoot")
 
@@ -285,6 +286,20 @@ class fighter_airplane(airplane):
             print("You can't go faster than your maximum speed")
         elif current_speed < self.max_speed and current_speed > 1:
             print('You have broken the sound barrier')
+
+#Defined the squadron class that has an aggrigation relationship with fighter airplanes
+class squadron:
+    def __init__(self,name,jets):
+        #Defined the attributes of the class
+        self.name = name # the name of the squadron, in string
+        self.jets = jets # Use aggregation to create a list of fighter jet objects
+
+    #Defined the methods
+    def attack(self,target):
+        print(self.name,'is attacking',target)
+
+        for i in self.jets:
+            fighter_airplane.shoot_missile
 
 #Defined the passenger airplane class that inherits from the airplane class
 class passenger_airplane(airplane):
@@ -351,11 +366,10 @@ class marine_vehicle(vehicle):
 class cruise_ship(marine_vehicle):
 
     #Defined the attributes that were not defined in the super class
-    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity, passenger_capacity):
+    def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, crew_capacity)
         # initialize an empty dictionary to store the passengers
         self.passengers = {}
-        self.passenger_capacity = passenger_capacity # in integer
 
     #Defined the methods
     def book_passenger(self, name, cabin):
@@ -421,7 +435,7 @@ class submarine(marine_vehicle):
         # set the depth attribute to zero
         self.depth = 0
 
-    def fire_torpedo(self, target):
+    def fire_torpedoe(self, target):
         # check if the submarine has any torpedoes left
         if self.torpedoes > 0:
             # simulate firing a torpedo at a target
@@ -432,7 +446,7 @@ class submarine(marine_vehicle):
         else:
             return False # firing failed
     
-    def reload_torpedo(self):
+    def reload_torpedoe(self):
         # check if the number of torpedoes is below the max_torpedoes
         if self.torpedoes < self.max_torpedoes:
             # increase the number of torpedoes by one
