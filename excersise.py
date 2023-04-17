@@ -268,7 +268,7 @@ class fighter_airplane(airplane):
     def __init__(self, max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines, num_of_missiles):
         super().__init__(max_speed, weight, horsepower, cargo_capacity, passenger_capacity, engine_capacity, fuel_type, cylinders, engine_type, engine_material, wing_span, model, num_of_engines)
         self.num_of_missiles = num_of_missiles # in integer
-        self.hourly_cost = 15000 # in dollars
+        self.__hourly_cost = 15000 # in dollars
 
     #Defined the methods    
     def shoot_missile(self):
@@ -310,7 +310,7 @@ class passenger_airplane(airplane):
         self.ticket_price = ticket_price # in dollars
         self.flight_duration = flight_duration # in hours
         self.total_cost = 0
-        self.hourly_cost = 3000 # in dollars
+        self.__hourly_cost = 3000 # in dollars
 
     #Defined the methods 
     def overboard_check(self,num_of_tickets):
